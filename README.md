@@ -1,3 +1,8 @@
+# JACDAC Debugger
+
+[![Build Status](https://travis-ci.org/Microsoft/pxt-jacdac-debugger.svg?branch=master)](https://travis-ci.org/Microsoft/pxt-jacdac-debugger)
+
+To use this project, go to https://arcade.makecode.com, create a **New Project**, go to **Extensions** and add this project.
 
 # Contributing
 
