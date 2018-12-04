@@ -8,7 +8,8 @@
         "jacdac-drivers": "*"
     },
     "files": [
-        "README.md"
+        "README.md",
+        "sample.ts"
     ],
     "testFiles": [
         "test.ts"
