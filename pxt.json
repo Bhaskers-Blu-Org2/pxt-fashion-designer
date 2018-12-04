@@ -4,7 +4,8 @@
     "description": "A web-based debugger for JACDAC - a plug and play single wire serial protocol",
     "license": "MIT",
     "dependencies": {
-        "core": "*"
+        "core": "*",
+        "jacdac-drivers": "*"
     },
     "files": [
         "README.md"
@@ -17,5 +18,6 @@
         "namespace": "jacdac",
         "label": "debugger",
         "localUrl": "http://127.0.0.1:3000/index.html"
-    }
+    },
+    "installedVersion": "workspace:c61e9560-0787-4124-1858-9cfdde7f4ea7"
 }
