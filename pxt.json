@@ -1,7 +1,7 @@
 {
-    "name": "editor-extension-sample",
+    "name": "jacdac-debugger-extension",
     "version": "0.0.1",
-    "description": "A sample editor extension for MakeCode",
+    "description": "A web-based debugger for JACDAC - a plug and play single wire serial protocol (beta)",
     "license": "MIT",
     "dependencies": {
         "core": "*"
@@ -14,8 +14,8 @@
     ],
     "public": true,
     "extension": {
-        "namespace": "music",
-        "label": "Sample Editor",
+        "namespace": "jacdac",
+        "label": "debugger",
         "localUrl": "http://127.0.0.1:3000/index.html"
     }
 }
