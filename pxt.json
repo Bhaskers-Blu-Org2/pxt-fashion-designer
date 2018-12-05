@@ -1,6 +1,6 @@
 {
     "name": "jacdac-debugger-extension",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A web-based debugger for JACDAC - a plug and play single wire serial protocol",
     "license": "MIT",
     "dependencies": {
