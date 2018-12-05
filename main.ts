@@ -7,11 +7,13 @@ namespace jdebugger {
 
     enum Mode {
         Drivers,
-        Devices
+        Devices,
+        Packets
     }
     let mode = Mode.Drivers;
 
     function showDrivers() {
+        jacdac.clearBridge();
         const drivers = jacdac.drivers();
         console.log(`${drivers.length} drivers`)
         drivers.forEach(d => console.log(" " + d))
@@ -19,6 +21,7 @@ namespace jdebugger {
     }
 
     function showDevices() {
+        jacdac.clearBridge();
         const drivers = jacdac.drivers();
         let serials: any = {};
         drivers.forEach(d => {
@@ -32,6 +35,10 @@ namespace jdebugger {
         console.log("");
     }
 
+    function showPackets() {
+        jacdac.logAllPackets();
+    }
+
     function refresh() {
         if (!jacdac.isConnected()) {
             console.log(`jd> disconnected`);
@@ -40,12 +47,12 @@ namespace jdebugger {
         switch (mode) {
             case Mode.Drivers: showDrivers(); break;
             case Mode.Devices: showDevices(); break;
+            case Mode.Packets: showPackets(); break;
         }
     }
 
     function init() {
-        // start game engine
-        game.splash("jacdac", "debugger");
+        game.currentScene(); // start game
         jacdac.onEvent(JacDacEvent.BusConnected, refresh);
         jacdac.onEvent(JacDacEvent.BusDisconnected, refresh);
         jacdac.onEvent(JacDacEvent.DriverChanged, refresh);
@@ -57,14 +64,21 @@ namespace jdebugger {
             mode = Mode.Devices;
             refresh();
         })
+        controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+            mode = Mode.Packets;
+            console.log(`sniffing packets`)
+            refresh();
+        })
 
         game.consoleOverlay.setVisible(true);
         console.log(`jd> debugger started`);
         console.log(`jd> press left for drivers`)
         console.log(`jd> press right for device`)
+        console.log(`jd> press down for packets`)
     }
 
-    jacdac.listenConsole();
+    jacdac.broadcastBatteryLevel(() => 0);
+    jacdac.broadcastConsole();
 
     init();
 }
