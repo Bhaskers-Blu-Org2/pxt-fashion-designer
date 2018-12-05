@@ -9,7 +9,8 @@
     },
     "files": [
         "README.md",
-        "sample.ts"
+        "sample.ts",
+        "APDS9960.ts"
     ],
     "testFiles": [
         "test.ts"
