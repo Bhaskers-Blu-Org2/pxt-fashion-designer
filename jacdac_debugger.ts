@@ -1,4 +1,4 @@
-namespace jacdac {
+/*namespace jacdac {
     class JacDacDebugger extends BridgeDriver {
         constructor() {
             super("snif")
@@ -24,3 +24,4 @@ namespace jacdac {
     const logAllDriver = new JacDacDebugger();
     logAllDriver.enable();
 }
+*/

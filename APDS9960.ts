@@ -1,5 +1,3 @@
-/* #region Helper Functions */
-
 function reverseString(str: string) {
     let newString = "";
     for (let j = str.length - 1; j >= 0; j--) {
@@ -227,7 +225,7 @@ namespace APDS9960 {
     let APDS9960_I2C_ADDR = APDS9960_I2C_ADDRESS;
 
     //Create buffer for register
-    let _wbuf = pins.createBuffer(2);
+    let _wbuf = control.createBuffer(2);
 
     //Set ALS and Proximity gain
     let _AGAIN = DEFAULT_AGAIN;
@@ -688,9 +686,11 @@ namespace APDS9960 {
 
 }
 
-APDS9960.init(false);
-
-basic.forever(function () {
-    APDS9960.debug();
-    basic.pause(2000);
-})
+//functon test() {
+//APDS9960.init(false);
+//
+//basic.forever(function () {
+//    APDS9960.debug();
+//    basic.pause(2000);
+//})
+//}

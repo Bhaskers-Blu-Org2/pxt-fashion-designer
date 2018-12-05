@@ -5,13 +5,16 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "jacdac-drivers": "*"
+        "jacdac-drivers": "*",
+        "controller": "*",
+        "game": "*"
     },
     "files": [
         "README.md",
         "sample.ts",
         "APDS9960.ts",
-        "jacdac_debugger.ts"
+        "jacdac_debugger.ts",
+        "main.ts"
     ],
     "testFiles": [
         "test.ts"
