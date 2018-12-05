@@ -85,8 +85,8 @@ namespace jdebugger {
         }
     }
 
-    function init() {
-        game.currentScene(); // start game
+    function start() {
+        game.pushScene(); // start game
         jacdac.onEvent(JacDacEvent.BusConnected, () => {
             console.log(`connected`)
             refresh()
@@ -112,14 +112,20 @@ namespace jdebugger {
             console.log(`sniffing packets`)
             refresh();
         })
+        controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+            // done
+            game.popScene();
+            game.consoleOverlay.setVisible(false);
+        })
 
         game.consoleOverlay.setVisible(true);
         console.log(`jacdac debugger`);
-        console.log(`press left for drivers`)
-        console.log(`press right for device`)
-        console.log(`press down for packets`)
+        console.log(` LEFT for drivers`)
+        console.log(` RIGHT for devices`)
+        console.log(` DOWN for packets`)
+        console.log(` B for exit`)
         refresh();
     }
 
-    init();
+    scene.systemMenu.addEntry(() => "jacdac debug", start);
 }
