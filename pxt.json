@@ -10,7 +10,8 @@
     "files": [
         "README.md",
         "sample.ts",
-        "APDS9960.ts"
+        "APDS9960.ts",
+        "jacdac_debugger.ts"
     ],
     "testFiles": [
         "test.ts"
