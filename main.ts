@@ -122,8 +122,4 @@ namespace jdebugger {
     }
 
     init();
-    jacdac.broadcastBatteryLevel(function () {
-        return 0;
-    })
-    //jacdac.listenConsole()
 }
