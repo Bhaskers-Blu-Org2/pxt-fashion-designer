@@ -1,7 +1,17 @@
 namespace jdebugger {
-    const hexBuf = control.createBuffer(4);
     function toHex(n: number): string {
+        const hexBuf = control.createBuffer(4);
         hexBuf.setNumber(NumberFormat.UInt32LE, 0, n);
+        return hexBuf.toHex();
+    }
+    function toHex16(n: number): string {
+        const hexBuf = control.createBuffer(2);
+        hexBuf.setNumber(NumberFormat.UInt16LE, 0, n);
+        return hexBuf.toHex();
+    }
+    function toHex8(n: number): string {
+        const hexBuf = control.createBuffer(1);
+        hexBuf.setNumber(NumberFormat.UInt8LE, 0, n);
         return hexBuf.toHex();
     }
 
@@ -15,7 +25,31 @@ namespace jdebugger {
         jacdac.clearBridge();
         const drivers = jacdac.drivers();
         console.log(`${drivers.length} drivers`)
-        drivers.forEach(d => console.log(`${d}`))
+        console.log(`serial address class`);
+        console.log(` flags status`);
+        drivers.forEach(d => {
+            console.log(`${toHex(d.serialNumber)} ${toHex8(d.address)} ${toHex(d.driverClass)}`);
+            let flags = " " + toHex16(d.flags) + " ";
+            if (d.isVirtualDriver())
+                flags += "virt";
+            else if (d.isHostDriver())
+                flags += "host";
+            else if (d.isBroadcastDriver())
+                flags += "broa";
+            else if (d.isSnifferDriver())
+                flags += "sniff";
+            if (d.isPaired())
+                flags += " paired";
+            if (d.isPairing())
+                flags += " pairing";
+            if (d.flags & DAL.JD_DEVICE_FLAGS_CP_SEEN)
+                flags += " cp"
+            if (d.flags & DAL.JD_DEVICE_FLAGS_INITIALISED)
+                flags += " inited"
+            if (d.flags & DAL.JD_DEVICE_FLAGS_INITIALISING)
+                flags += " initing"
+            console.log(flags)
+        })
         console.log("");
     }
 
@@ -84,7 +118,12 @@ namespace jdebugger {
         console.log(`press left for drivers`)
         console.log(`press right for device`)
         console.log(`press down for packets`)
+        refresh();
     }
 
     init();
+    jacdac.broadcastBatteryLevel(function () {
+        return 0;
+    })
+    //jacdac.listenConsole()
 }
