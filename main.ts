@@ -11,12 +11,11 @@ namespace jdebugger {
         Packets
     }
     let mode = Mode.Drivers;
-
     function showDrivers() {
         jacdac.clearBridge();
         const drivers = jacdac.drivers();
         console.log(`${drivers.length} drivers`)
-        drivers.forEach(d => console.log(" " + d))
+        drivers.forEach(d => console.log(`${d}`))
         console.log("");
     }
 
@@ -25,13 +24,14 @@ namespace jdebugger {
         const drivers = jacdac.drivers();
         let serials: any = {};
         drivers.forEach(d => {
-            if (!serials[d.serialNumber]) {
-                serials[d.serialNumber] = d;
+            const sn = toHex(d.serialNumber)
+            if (!serials[sn]) {
+                serials[sn] = d;
             }
         })
         const devs = Object.keys(serials);
         console.log(`${devs.length} devices`)
-        devs.forEach(d => console.log(` ${d}`));
+        devs.forEach(d => console.log(`${d}`));
         console.log("");
     }
 
@@ -41,7 +41,7 @@ namespace jdebugger {
 
     function refresh() {
         if (!jacdac.isConnected()) {
-            console.log(`jd> disconnected`);
+            console.log(`disconnected`);
             return;
         }
         switch (mode) {
@@ -53,9 +53,18 @@ namespace jdebugger {
 
     function init() {
         game.currentScene(); // start game
-        jacdac.onEvent(JacDacEvent.BusConnected, refresh);
-        jacdac.onEvent(JacDacEvent.BusDisconnected, refresh);
-        jacdac.onEvent(JacDacEvent.DriverChanged, refresh);
+        jacdac.onEvent(JacDacEvent.BusConnected, () => {
+            console.log(`connected`)
+            refresh()
+        });
+        jacdac.onEvent(JacDacEvent.BusDisconnected, () => {
+            console.log(`disconnected`)
+            refresh()
+        });
+        jacdac.onEvent(JacDacEvent.DriverChanged, () => {
+            console.log(`driver changed`)
+            refresh()
+        });
         controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
             mode = Mode.Drivers;
             refresh();
@@ -71,14 +80,11 @@ namespace jdebugger {
         })
 
         game.consoleOverlay.setVisible(true);
-        console.log(`jd> debugger started`);
-        console.log(`jd> press left for drivers`)
-        console.log(`jd> press right for device`)
-        console.log(`jd> press down for packets`)
+        console.log(`jacdac debugger`);
+        console.log(`press left for drivers`)
+        console.log(`press right for device`)
+        console.log(`press down for packets`)
     }
-
-    jacdac.broadcastBatteryLevel(() => 0);
-    jacdac.broadcastConsole();
 
     init();
 }
