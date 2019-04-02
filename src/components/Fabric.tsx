@@ -13,7 +13,10 @@ export class Fabric extends React.Component<{}, {}> {
 
     bindFabric(el: any) {
         this.element = el;
-        this.canvas = new fabric.Canvas(this.element)
+        this.canvas = new fabric.Canvas(this.element);
+        this.canvas.add(new fabric.Circle({
+            radius: 10
+        }))
     }
 
     componentDidMount() {

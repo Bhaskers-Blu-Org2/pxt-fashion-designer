@@ -1,11 +1,8 @@
-/// <reference path="./localtypings/extension.d.ts" />
 /// <reference path="./localtypings/fabric.d.ts" />
 
 import * as React from 'react';
 import { Menu, Button } from 'semantic-ui-react'
 import { pxt, PXTClient } from '../lib/pxtextensions';
-import { Hello } from './components/Hello';
-import { EmitterFactory } from "./exporter/factory";
 import { Fabric } from './components/Fabric';
 
 export interface AppProps {
@@ -46,10 +43,7 @@ export class App extends React.Component<AppProps, AppState> {
         console.log("write code and json");
 
         const { target } = this.state;
-        const emitter = EmitterFactory.getEmitter(target);
-        if (!emitter) return;
-
-        const code = emitter.output(undefined);
+        const code = "// TODO";
         const json = {};
         pxt.extensions.write(code, JSON.stringify(json));
     }
@@ -59,10 +53,7 @@ export class App extends React.Component<AppProps, AppState> {
 
         return (
             <div className="App">
-                <Hello />
                 <Fabric />
-                <br />
-                <span>Go back to the editor, to see your new block under the music category</span>
             </div>
         );
     }
