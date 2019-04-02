@@ -1,6 +1,6 @@
 # JACDAC Debugger
 
-[![Build Status](https://travis-ci.org/Microsoft/pxt-jacdac-debugger.svg?branch=master)](https://travis-ci.org/Microsoft/pxt-jacdac-debugger)
+[![Build Status](https://travis-ci.org/Microsoft/pxt-fashion-designer.svg?branch=master)](https://travis-ci.org/Microsoft/pxt-fashion-designer)
 
 To use this project, go to https://arcade.makecode.com, create a **New Project**, go to **Extensions** and add this project.
 

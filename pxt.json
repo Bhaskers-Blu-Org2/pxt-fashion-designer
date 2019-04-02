@@ -1,19 +1,13 @@
 {
-    "name": "jacdac-debugger-extension",
+    "name": "pxt-fashion-designer",
     "version": "0.0.4",
-    "description": "A web-based debugger for JACDAC - a plug and play single wire serial protocol",
+    "description": "A Fashion designer for makecode",
     "license": "MIT",
     "dependencies": {
-        "core": "*",
-        "jacdac-drivers": "*",
-        "controller": "*",
-        "game": "*"
+        "core": "*"
     },
     "files": [
         "README.md",
-        "sample.ts",
-        "APDS9960.ts",
-        "jacdac_debugger.ts",
         "main.ts"
     ],
     "testFiles": [
@@ -21,8 +15,8 @@
     ],
     "public": true,
     "extension": {
-        "namespace": "jacdac",
-        "label": "debugger",
+        "namespace": "fashion",
+        "label": "fashion",
         "localUrl": "http://127.0.0.1:3000/index.html"
     },
     "installedVersion": "workspace:6922374e-7540-4504-875a-50bddfe0afab"
