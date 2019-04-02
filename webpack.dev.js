@@ -5,7 +5,10 @@ const path = require('path'),
 module.exports = {
     mode: 'development',
     entry: {
-        app: ["./src/index.tsx"],
+        app: [
+            "./node_modules/fabric/dist/fabric.js",
+            "./src/index.tsx"
+        ],
     },
     output: {
         path: path.resolve(__dirname, 'build'),
