@@ -1,8 +1,22 @@
-# JACDAC Debugger
+# Fashion Designer for MakeCode
 
 [![Build Status](https://travis-ci.org/Microsoft/pxt-fashion-designer.svg?branch=master)](https://travis-ci.org/Microsoft/pxt-fashion-designer)
 
-To use this project, go to https://arcade.makecode.com, create a **New Project**, go to **Extensions** and add this project.
+# How to use this extension
+
+To use this project, go to https://maker.makecode.com, create a **New Project**, go to **Extensions** and add this project.
+
+# How to build this extension
+
+This process assumes we successfully setup a local build of https://github.com/Microsoft/pxt-maker.
+
+* clone this repo under /projects
+* open the repo direction
+* run ``npm install``
+* run ``npm start`` to start the local server
+* launch the pxt editor using ``pxt serve --rebundle``
+* add this local extension to a dummy project
+* click on the "fashion" button and it should open your web page
 
 # Contributing
 
