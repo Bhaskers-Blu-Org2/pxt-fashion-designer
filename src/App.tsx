@@ -1,4 +1,4 @@
-/// <reference path="./localtypings/fabric.d.ts" />
+// / <reference path="./localtypings/fabric.d.ts" />
 
 import * as React from 'react';
 import { Menu, Button } from 'semantic-ui-react'
