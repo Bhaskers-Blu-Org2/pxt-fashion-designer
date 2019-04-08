@@ -4,6 +4,9 @@ import * as React from 'react';
 import { Menu, Button } from 'semantic-ui-react'
 import { pxt, PXTClient } from '../lib/pxtextensions';
 import { Fabric } from './components/Fabric';
+import { SidebarExampleSidebar} from './components/Sketching';
+import { MainCanvas } from './components/MainCanvas'
+
 
 export interface AppProps {
     client: PXTClient;
@@ -11,24 +14,16 @@ export interface AppProps {
 }
 
 export interface AppState {
-    menu?: boolean;
 }
 
 export class App extends React.Component<AppProps, AppState> {
-    fabric: Fabric;
+    _mainCanvas: MainCanvas;
 
     constructor(props: AppProps) {
         super(props);
 
         this.state = {
         }
-
-        this.deserialize = this.deserialize.bind(this);
-        this.serialize = this.serialize.bind(this);
-        this.handleMenuClick = this.handleMenuClick.bind(this);
-
-        props.client.on('read', this.deserialize);
-        props.client.on('hidden', this.serialize);
     }
 
     private deserialize(resp: pxt.extensions.ReadResponse) {
@@ -43,29 +38,17 @@ export class App extends React.Component<AppProps, AppState> {
         // PXT allows us to write to files in the project [extension_name].ts and [extension_name].json
         console.log("write code and json");
 
-        const { menu } = this.state;
         const code = "// TODO";
         const json = {};
         pxt.extensions.write(code, JSON.stringify(json));
     }
 
-    private handleMenuClick() {
-        const { menu } = this.state;
-        this.setState({ menu: !menu });
-    }
 
     render() {
-        const { menu } = this.state;
 
         return (
-            <div className="ui container">
-                <div className="ui center">
-                    <Fabric ref={f => this.fabric = f} />
-                </div>
-                <div className="ui menu" role="button" onClick={this.handleMenuClick}>
-                    {menu ? "hello" : "olleh"}
-                    {menu ? <div>some more html</div> : undefined}
-                </div>
+            <div >
+                <MainCanvas ref={m => this._mainCanvas = m} />
             </div>
         );
     }
