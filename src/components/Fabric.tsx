@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Button, Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
-export class Fabric extends React.Component<{}, {}> {
+export class Fabric extends React.Component<any, any> {
     element: HTMLCanvasElement;
     canvas: fabric.Canvas;
 
@@ -10,6 +10,12 @@ export class Fabric extends React.Component<{}, {}> {
         super(props);
 
         this.bindFabric = this.bindFabric.bind(this);
+
+        this.state = {
+            height: 200,
+            width: 200
+        };
+
     }
 
     bindFabric(el: any) {
@@ -19,15 +25,27 @@ export class Fabric extends React.Component<{}, {}> {
             radius: 10
         }))
         this.canvas.backgroundColor="green";
+        this.canvas.setWidth(this.state.height)
+        this.canvas.setHeight(this.state.width)
 
-        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-        this.canvas.setWidth(200)
-        this.canvas.setHeight(height)
+        //this.canvas.setDimensions({width: '100px', height: '100%'}, {cssOnly: true});
+
+
+    }
+
+    setHeightWidth()
+    {
+
+    }
+
+    componentDidUpdate()
+    {
+        console.log("fabric: componentDidUpdate()")
     }
 
     componentDidMount() {
         // ready to do something
+        console.log("fabric: componentDidUpdate()")
     }
 
     componentWillUnmount() {
