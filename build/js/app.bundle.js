@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "e0a9c1f13542bc5dcd12";
+/******/ 	var hotCurrentHash = "1b108b29b44e845c17ce";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -76655,6 +76655,63 @@ exports.PXTExtension = PXTExtension;
 
 /***/ }),
 
+/***/ "./src/components/Fabric.tsx":
+/*!***********************************!*\
+  !*** ./src/components/Fabric.tsx ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "react");
+var Fabric = (function (_super) {
+    __extends(Fabric, _super);
+    function Fabric(props) {
+        var _this = _super.call(this, props) || this;
+        _this.bindFabric = _this.bindFabric.bind(_this);
+        return _this;
+    }
+    Fabric.prototype.bindFabric = function (el) {
+        this.element = el;
+        this.canvas = new fabric.Canvas(this.element);
+        this.canvas.add(new fabric.Circle({
+            radius: 10
+        }));
+        this.canvas.backgroundColor = "green";
+        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        this.canvas.setWidth(200);
+        this.canvas.setHeight(height);
+    };
+    Fabric.prototype.componentDidMount = function () {
+    };
+    Fabric.prototype.componentWillUnmount = function () {
+    };
+    Fabric.prototype.render = function () {
+        return React.createElement("canvas", { ref: this.bindFabric });
+    };
+    return Fabric;
+}(React.Component));
+exports.Fabric = Fabric;
+
+
+/***/ }),
+
 /***/ "./src/components/MainCanvas.tsx":
 /*!***************************************!*\
   !*** ./src/components/MainCanvas.tsx ***!
@@ -76679,26 +76736,38 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "react");
+var Fabric_1 = __webpack_require__(/*! ./Fabric */ "./src/components/Fabric.tsx");
 var semantic_ui_react_1 = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 var MainCanvas = (function (_super) {
     __extends(MainCanvas, _super);
     function MainCanvas() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    MainCanvas.prototype.handleOnUpdate = function () {
+        console.log("size changed, resize fabric");
+    };
+    MainCanvas.prototype.componentDidMount = function () {
+        console.log(this);
+    };
     MainCanvas.prototype.render = function () {
-        return (React.createElement(semantic_ui_react_1.Grid, { celled: true, padded: true, style: { height: '100vh' } },
-            React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '70%' } },
-                React.createElement(semantic_ui_react_1.Grid.Column, { width: 10 },
-                    React.createElement("p", null, "One")),
-                React.createElement(semantic_ui_react_1.Grid.Column, { width: 6 },
-                    React.createElement("p", null, "Two"))),
-            React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '30%' } },
-                React.createElement(semantic_ui_react_1.Grid.Column, { width: 10 },
-                    React.createElement("p", null, "Three")),
-                React.createElement(semantic_ui_react_1.Grid.Column, { width: 3 },
-                    React.createElement("p", null, "Four")),
-                React.createElement(semantic_ui_react_1.Grid.Column, { width: 3 },
-                    React.createElement("p", null, "Five")))));
+        var _this = this;
+        return (React.createElement(semantic_ui_react_1.Responsive, { as: semantic_ui_react_1.Grid, onUpdate: this.handleOnUpdate },
+            React.createElement(semantic_ui_react_1.Grid, { celled: true, padded: true, style: { height: '100vh' } },
+                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '5%' }, centered: true },
+                    React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
+                        React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "Ins"))),
+                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '90%' }, centered: true },
+                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 1 },
+                        React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
+                            React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "ZC"))),
+                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 12, id: "FabricCanvas" },
+                        React.createElement(Fabric_1.Fabric, { ref: function (f) { return _this.fabric = f; } })),
+                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 1 },
+                        React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
+                            React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "TT")))),
+                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '5%' }, centered: true },
+                    React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
+                        React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "Sk"))))));
     };
     return MainCanvas;
 }(React.Component));
