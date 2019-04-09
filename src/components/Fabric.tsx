@@ -6,27 +6,40 @@ export class Fabric extends React.Component<any, any> {
     element: HTMLCanvasElement;
     canvas: fabric.Canvas;
 
-    constructor(props: {}) {
+    constructor(props: any) {
         super(props);
 
         this.bindFabric = this.bindFabric.bind(this);
 
-        this.state = {
-            height: 200,
-            width: 200
-        };
+    }
 
+    zoomIn()
+    {
+        var zoom = this.canvas.getZoom();
+        zoom = zoom*1.1;
+        this.canvas.setZoom(zoom);
+    }
+
+    zoomOut()
+    {
+        var zoom = this.canvas.getZoom();
+        zoom = zoom*0.9;
+        this.canvas.setZoom(zoom);
     }
 
     bindFabric(el: any) {
-        this.element = el;
+        const bbox = el.parentElement.getBoundingClientRect();
+        this.element = el as HTMLCanvasElement;
         this.canvas = new fabric.Canvas(this.element);
         this.canvas.add(new fabric.Circle({
             radius: 10
         }))
         this.canvas.backgroundColor="green";
-        this.canvas.setWidth(this.state.height)
-        this.canvas.setHeight(this.state.width)
+
+        var width = Math.min(bbox.width, window.innerWidth || 0);
+        var height = Math.max(bbox.height, window.innerHeight || 0);
+        this.canvas.setWidth(width)
+        this.canvas.setHeight(height)
 
         //this.canvas.setDimensions({width: '100px', height: '100%'}, {cssOnly: true});
 
@@ -46,6 +59,8 @@ export class Fabric extends React.Component<any, any> {
     componentDidMount() {
         // ready to do something
         console.log("fabric: componentDidUpdate()")
+        this.canvas.setZoom(this.canvas.getZoom()*1.1);
+        this.canvas.renderAll();
     }
 
     componentWillUnmount() {

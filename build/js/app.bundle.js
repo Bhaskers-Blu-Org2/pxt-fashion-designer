@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "881dbddf620476e2134c";
+/******/ 	var hotCurrentHash = "85a766364e9286f6d637";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -76456,9 +76456,9 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 /***/ }),
 
 /***/ "./node_modules/webpack/buildin/global.js":
-/*!************************************************!*\
-  !*** ./node_modules/webpack/buildin/global.js ***!
-  \************************************************/
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -76487,9 +76487,9 @@ module.exports = g;
 /***/ }),
 
 /***/ "./node_modules/webpack/buildin/module.js":
-/*!************************************************!*\
-  !*** ./node_modules/webpack/buildin/module.js ***!
-  \************************************************/
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -76684,6 +76684,10 @@ var Fabric = (function (_super) {
     function Fabric(props) {
         var _this = _super.call(this, props) || this;
         _this.bindFabric = _this.bindFabric.bind(_this);
+        _this.state = {
+            height: 200,
+            width: 200
+        };
         return _this;
     }
     Fabric.prototype.bindFabric = function (el) {
@@ -76693,12 +76697,16 @@ var Fabric = (function (_super) {
             radius: 10
         }));
         this.canvas.backgroundColor = "green";
-        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-        this.canvas.setWidth(200);
-        this.canvas.setHeight(height);
+        this.canvas.setWidth(this.state.height);
+        this.canvas.setHeight(this.state.width);
+    };
+    Fabric.prototype.setHeightWidth = function () {
+    };
+    Fabric.prototype.componentDidUpdate = function () {
+        console.log("fabric: componentDidUpdate()");
     };
     Fabric.prototype.componentDidMount = function () {
+        console.log("fabric: componentDidUpdate()");
     };
     Fabric.prototype.componentWillUnmount = function () {
     };
@@ -76740,34 +76748,32 @@ var Fabric_1 = __webpack_require__(/*! ./Fabric */ "./src/components/Fabric.tsx"
 var semantic_ui_react_1 = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 var MainCanvas = (function (_super) {
     __extends(MainCanvas, _super);
-    function MainCanvas() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function MainCanvas(props) {
+        return _super.call(this, props) || this;
     }
     MainCanvas.prototype.handleOnUpdate = function () {
+        debugger;
         console.log("size changed, resize fabric");
     };
     MainCanvas.prototype.componentDidMount = function () {
+        debugger;
         console.log(this);
     };
     MainCanvas.prototype.render = function () {
         var _this = this;
         return (React.createElement(semantic_ui_react_1.Responsive, { as: semantic_ui_react_1.Grid, onUpdate: this.handleOnUpdate },
-            React.createElement(semantic_ui_react_1.Grid, { celled: true, padded: true, style: { height: '100vh' } },
-                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '5%' }, centered: true },
-                    React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
-                        React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "Ins"))),
+            React.createElement(semantic_ui_react_1.Grid, { style: { height: '100vh', width: '100vw' } },
+                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '5%' }, centered: true, color: "yellow" }, "Ins"),
                 React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '90%' }, centered: true },
-                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 1 },
+                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 1, color: "green", centered: true },
                         React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
                             React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "ZC"))),
-                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 12, id: "FabricCanvas" },
+                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 14, id: "FabricCanvas", color: "red" },
                         React.createElement(Fabric_1.Fabric, { ref: function (f) { return _this.fabric = f; } })),
-                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 1 },
+                    React.createElement(semantic_ui_react_1.Grid.Column, { width: 1, color: "orange", centered: true },
                         React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
                             React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "TT")))),
-                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '5%' }, centered: true },
-                    React.createElement(semantic_ui_react_1.Menu, { fluid: true, vertical: true },
-                        React.createElement(semantic_ui_react_1.Menu.Item, { className: 'header' }, "Sk"))))));
+                React.createElement(semantic_ui_react_1.Grid.Row, { style: { height: '5%' }, centered: true, color: "blue" }, "Sk"))));
     };
     return MainCanvas;
 }(React.Component));
