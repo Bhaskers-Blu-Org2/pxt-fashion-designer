@@ -6,8 +6,10 @@ declare namespace fabric {
     const isLikelyNode: boolean;
     const isTouchSupported: boolean;
 
+    
+
     /////////////////////////////////////////////////////////////
-    // farbic Functions
+    // fabric Functions
     /////////////////////////////////////////////////////////////
 
     function createCanvasForNode(width: number, height: number): Canvas;
@@ -926,6 +928,12 @@ declare namespace fabric {
     }
 
     interface IStaticCanvasOptions {
+
+        
+        freeDrawingColor?: string;
+
+        freeDrawingLineWidth?: number;
+
         /**
          * Background color of canvas instance.
          * Should be set via {@link fabric.StaticCanvas#setBackgroundColor}.
@@ -1016,8 +1024,10 @@ declare namespace fabric {
          * if set to false background image is not affected by viewport transform
          * @since 1.6.3
          * @type Boolean
+         * 
          */
         backgroundVpt?: boolean;
+
         /**
          * if set to false overlay image is not affected by viewport transform
          * @since 1.6.3
@@ -1074,6 +1084,8 @@ declare namespace fabric {
          * @return {Object} thisArg
          */
         constructor(element: HTMLCanvasElement | string, options?: ICanvasOptions);
+
+        _activeObject?: Object | Group;
 
         /**
          * Calculates canvas element offset relative to the document
@@ -1454,10 +1466,10 @@ declare namespace fabric {
          * @return {Boolean | null} `true` if method is supported (or at least exists),
          *                          `null` if canvas element or context can not be initialized
          */
-        supports(methodName: "getImageData" | "toDataURL" | "toDataURLWithQuality" | "setLineDash"): boolean;
+        static supports(methodName: "getImageData" | "toDataURL" | "toDataURLWithQuality" | "setLineDash"): boolean;
 
         /**
-         * Exports canvas element to a dataurl image. Note that when multiplier is used, cropping is scaled appropriately
+         * s canvas element to a dataurl image. Note that when multiplier is used, cropping is scaled appropriately
          * @param [options] Options object
          */
         toDataURL(options?: IDataURLOptions): string;
@@ -1529,6 +1541,8 @@ declare namespace fabric {
          */
         straightenObject(object: Object): Canvas;
     }
+
+
 
     interface ICanvasOptions extends IStaticCanvasOptions {
         /**
@@ -2030,10 +2044,11 @@ declare namespace fabric {
         constructor(objects?: Object[], options?: IGroupOptions, isAlreadyGrouped?: boolean);
         /**
          * Adds an object to a group; Then recalculates group's dimension, position.
+         * @param [Object] object
          * @return thisArg
          * @chainable
          */
-        addWithUpdate(object: Object): Group;
+        addWithUpdate(object?: Object): Group;
         /**
          * Removes an object from a group; Then recalculates group's dimension, position.
          * @return thisArg
@@ -2346,6 +2361,11 @@ declare namespace fabric {
          * Produces a function that calculates distance from canvas edge to Line origin.
          */
         makeEdgeToOriginGetter(propertyNames: { origin: number, axis1: any, axis2: any, dimension: any }, originValues: { nearest: any, center: any, farthest: any }): Function;
+        /**
+         * Recalculates line points given width and height
+         * @private
+         */
+        calcLinePoints(): { x1: number, x2: number, y1: number, y2: number };
     }
 
     interface IObjectOptions {
@@ -2498,7 +2518,7 @@ declare namespace fabric {
         /**
          * Color of object's fill
          */
-        fill?: string;
+        fill?: string | Pattern;
 
         /**
          * Fill rule used to fill an object
@@ -2686,12 +2706,12 @@ declare namespace fabric {
         lockScalingFlip?: boolean;
 
         /**
-         * When `true`, object is not exported in OBJECT/JSON
+         * When `true`, object is not ed in OBJECT/JSON
          * since 1.6.3
          * @type Boolean
          * @default
          */
-        excludeFromExport?: boolean;
+        excludeFrom?: boolean;
 
         /**
          * When `true`, object is cached on an additional canvas.
@@ -3137,22 +3157,22 @@ declare namespace fabric {
          * @param value Value to set sourcePath to
          */
         setSourcePath(value: string): Object;
-        // functions from object svg mixin
+        // functions from object svg  mixin
         // -----------------------------------------------------------------------------------------------------------------------------------
         /**
-         * Returns styles-string for svg-export
+         * Returns styles-string for svg-
          * @param {Boolean} skipShadow a boolean to skip shadow filter output
          * @return {String}
          */
         getSvgStyles(skipShadow?: boolean): string;
         /**
-         * Returns transform-string for svg-export
+         * Returns transform-string for svg-
          * @param {Boolean} use the full transform or the single object one.
          * @return {String}
          */
         getSvgTransform(full?: boolean, additionalTransform?: string): string;
         /**
-         * Returns transform-string for svg-from the transform matrix of single elements
+         * Returns transform-string for svg- from the transform matrix of single elements
          */
         getSvgTransformMatrix(): string;
 
@@ -3466,14 +3486,14 @@ declare namespace fabric {
          */
         getSvgFilter(): string;
         /**
-         * Returns styles-string for svg-export
+         * Returns styles-string for svg-
          * @param {Object} style the object from which to retrieve style properties
          * @param {Boolean} useWhiteSpace a boolean to include an additional attribute in the style.
          * @return {String}
          */
         getSvgSpanStyles(style: any, useWhiteSpace?: boolean): string;
         /**
-         * Returns text-decoration property for svg-export
+         * Returns text-decoration property for svg-
          * @param {Object} style the object from which to retrieve style properties
          * @return {String}
          */
@@ -3549,7 +3569,7 @@ declare namespace fabric {
          * @param {Array} dashArray array representing dashes
          * @param {Function} alternative function to call if browser does not support lineDash
          */
-        _setLineDash(ctx: CanvasRenderingContext2D, dashArray: number[], alternative: Function): void;
+        _setLineDash(ctx: CanvasRenderingContext2D, dashArray: number[], alternative?: (ctx: CanvasRenderingContext2D) => void): void;
         /**
          * @private
          * @param {CanvasRenderingContext2D} ctx Context to render on
@@ -3558,6 +3578,16 @@ declare namespace fabric {
          * @return {Object} offset.offsetY offset for text rendering
          */
         _applyPatternGradientTransform(ctx: CanvasRenderingContext2D, filler: string | Pattern | Gradient): void;
+        /**
+         * @private
+         * @param {CanvasRenderingContext2D} ctx Context to render on
+         */
+        _render(ctx: CanvasRenderingContext2D): void;
+        /**
+         * @private
+         * @param {CanvasRenderingContext2D} ctx Context to render on
+         */
+        _renderPaintInOrder(ctx: CanvasRenderingContext2D): void;
     }
 
     interface IPathOptions extends IObjectOptions {
@@ -3938,7 +3968,7 @@ declare namespace fabric {
          */
         getSelectionStyles(startIndex?: number, endIndex?: number, complete?: boolean): any[];
         /**
-         * Returns styles-string for svg-export
+         * Returns styles-string for svg-
          * @param {Boolean} skipShadow a boolean to skip shadow filter output
          * @return {String}
          */
@@ -5532,4 +5562,5 @@ declare namespace fabric {
     class WebglFilterBackend {
         constructor(options?: WebglFilterBackendOptions);
     }
+
 }

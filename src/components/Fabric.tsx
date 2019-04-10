@@ -13,6 +13,16 @@ export class Fabric extends React.Component<any, any> {
 
     }
 
+    setDrawingMode()
+    {
+        this.canvas.isDrawingMode = true;
+    }
+
+    setDrawingColor()
+    {
+        
+    }
+
     zoomIn()
     {
         var zoom = this.canvas.getZoom();
@@ -30,19 +40,15 @@ export class Fabric extends React.Component<any, any> {
     bindFabric(el: any) {
         const bbox = el.parentElement.getBoundingClientRect();
         this.element = el as HTMLCanvasElement;
-        this.canvas = new fabric.Canvas(this.element);
-        this.canvas.add(new fabric.Circle({
-            radius: 10
-        }))
-        this.canvas.backgroundColor="green";
+        this.canvas = new fabric.Canvas(this.element,{
+            backgroundColor: 'transparent',
+            freeDrawingCursor: 'none',
+        });
 
         var width = Math.min(bbox.width, window.innerWidth || 0);
         var height = Math.max(bbox.height, window.innerHeight || 0);
-        this.canvas.setWidth(width)
-        this.canvas.setHeight(height)
-
-        //this.canvas.setDimensions({width: '100px', height: '100%'}, {cssOnly: true});
-
+        this.canvas.setWidth(width);
+        this.canvas.setHeight(height);
 
     }
 
