@@ -1158,7 +1158,6 @@ declare namespace fabric {
          */
         setHeight(value: number | string, options?: ICanvasDimensionsOptions): Canvas;
 
-
         setBrushColor(value: string): Canvas;
 
         setBrushWidth(value: number): Canvas;

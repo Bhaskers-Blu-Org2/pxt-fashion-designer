@@ -4,9 +4,9 @@ import { Grid, Menu, Responsive, Button, Icon, Sidebar, Segment, Label, Header, 
 import { CirclePicker } from 'react-color';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPencil, faPaintBrush, faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload, faLightbulb,  faPalette, faTemperatureHot, faBrain, faArrows, faSignalAlt, faHandPaper, faTireRugged, faLightsHoliday, faVolume} from '@fortawesome/pro-solid-svg-icons'
+import { faPencil, faPaintBrush, faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload, faLightbulb,  faPalette, faTemperatureHot, faBrain, faArrows, faSignalAlt, faHandPaper, faTireRugged, faLightsHoliday, faVolume, faMousePointer} from '@fortawesome/pro-solid-svg-icons'
 
-library.add(faPencil,faPaintBrush,faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload, faLightbulb, faPalette, faTemperatureHot, faBrain, faArrows, faSignalAlt, faHandPaper, faTireRugged, faLightsHoliday, faVolume)
+library.add(faPencil,faPaintBrush,faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload, faLightbulb, faPalette, faTemperatureHot, faBrain, faArrows, faSignalAlt, faHandPaper, faTireRugged, faLightsHoliday, faVolume, faMousePointer)
 
 
 
@@ -102,7 +102,26 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
 
     protected handleSetDrawingMode()
     {
+        debugger;
         this.fabric.setDrawingMode();
+    }
+
+    handleSetPencilDrawingMode()
+    {
+        this.fabric.setDrawingMode();
+        this.fabric.setPencilBrush();
+    }
+
+    handleSetCircleBrushDrawingMode()
+    {
+        this.fabric.setDrawingMode();
+        this.fabric.setCircleBrush();
+    }
+
+    handleSetSprayBrushDrawingMode()
+    {
+        this.fabric.setDrawingMode();
+        this.fabric.setSprayBrush();
     }
 
     //#endregion
@@ -136,17 +155,17 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                                 </Grid.Row>
                                 <Grid.Row style={{ height: '90%' }} centered verticalAlign="middle" horizontalAlign="middle" color="black">
                                     <Grid.Column width={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.handleSetPencilDrawingMode.bind(this)} color="black" className="cool">
                                             <FontAwesomeIcon icon="pencil" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.handleSetCircleBrushDrawingMode.bind(this)} color="black">
                                             <FontAwesomeIcon icon="paint-brush" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} id="FabricCanvas" aligned left verticalAlign="middle" >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.handleSetSprayBrushDrawingMode.bind(this)} color="black">
                                             <FontAwesomeIcon icon="spray-can" size="3x"  />
                                         </Button>
                                     </Grid.Column>
@@ -163,6 +182,11 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                                     <Grid.Column width={1} aligned middle>
                                         <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
                                             <FontAwesomeIcon icon="grip-lines" size="3x"  />
+                                        </Button>
+                                    </Grid.Column>
+                                    <Grid.Column width={1} >
+                                        <Button icon size='medium' onClick={this.handleSetPencilDrawingMode.bind(this)} color="black" className="cool">
+                                            <FontAwesomeIcon icon="mouse-pointer" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} aligned middle>
