@@ -72,8 +72,9 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
         this.fabric.setDrawingMode();
     }
 
-    handleChangeComplete = () => {
-        
+    handleChangeComplete = (data: any) => {
+        this.fabric.setDrawingColor(data.hex);
+        console.log(data.hex);
     };
 
     render() {

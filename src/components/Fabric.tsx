@@ -18,9 +18,9 @@ export class Fabric extends React.Component<any, any> {
         this.canvas.isDrawingMode = true;
     }
 
-    setDrawingColor()
+    setDrawingColor(color: string)
     {
-        
+        this.canvas.setBrushColor(color);
     }
 
     zoomIn()
@@ -48,6 +48,7 @@ export class Fabric extends React.Component<any, any> {
         var height = Math.max(bbox.height, window.innerHeight || 0);
         this.canvas.setWidth(width);
         this.canvas.setHeight(height);
+        //this.canvas.setBrushWidth(5);
     }
 
     setHeightWidth()
