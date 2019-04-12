@@ -929,11 +929,6 @@ declare namespace fabric {
 
     interface IStaticCanvasOptions {
 
-        
-        freeDrawingColor?: string;
-
-        freeDrawingLineWidth?: number;
-
         /**
          * Background color of canvas instance.
          * Should be set via {@link fabric.StaticCanvas#setBackgroundColor}.
@@ -1162,6 +1157,27 @@ declare namespace fabric {
          * @chainable true
          */
         setHeight(value: number | string, options?: ICanvasDimensionsOptions): Canvas;
+
+
+        setBrushColor(value: string): Canvas;
+
+        setBrushWidth(value: number): Canvas;
+
+        setBrushShadow(value: Shadow): Canvas;
+
+        setBrushShadowBlur(value: number): Canvas;
+
+        setBrushShadowXOffset(value: number): Canvas;
+
+        setBrushShadowYOffset(value: number): Canvas;
+
+        setFreeDrawingBrush(value: BaseBrush): Canvas;
+
+        setPencilBrush(value: Canvas): Canvas;
+
+        setCircleBrush(value: Canvas): Canvas;
+
+        setSprayBrush(value: Canvas): Canvas;
 
         /**
          * Sets dimensions (width, height) of this canvas instance. when options.cssOnly flag active you should also supply the unit of measure (px/%/em)
@@ -1441,7 +1457,7 @@ declare namespace fabric {
         /**
          * Clears a canvas element and dispose objects
          * @return {fabric.Canvas} thisArg
-         * @chainable	 */
+         * @chainable	*/
         dispose(): Canvas;
 
         /**

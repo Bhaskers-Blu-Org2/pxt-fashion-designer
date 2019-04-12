@@ -2,6 +2,12 @@ import * as React from 'react';
 import { Fabric } from './Fabric'
 import { Grid, Menu, Responsive, Button, Icon, Sidebar, Segment } from 'semantic-ui-react'
 import { CirclePicker } from 'react-color';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPencil, faPaintBrush, faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload} from '@fortawesome/pro-solid-svg-icons'
+
+library.add(faPencil,faPaintBrush,faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload )
+
 
 
 export interface MainCanvasState {
@@ -17,6 +23,8 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
 
 
     constructor(props: {}) {
+
+        
         super(props);
 
         this.state = {
@@ -64,8 +72,7 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
         this.fabric.setDrawingMode();
     }
 
-    handleSetDrawingColor= () => {
-
+    handleChangeComplete = () => {
         
     };
 
@@ -82,51 +89,62 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                         inverted
                         horizontal
                         visible={inspirationToolBarVisible}
+                        onHide={this.handleInspirationBarHide}
                         width='very thin'
                         color="black">
                             <Grid style={{ width: '100vw' }}>
                                 <Grid.Row centered horizontalAlign="middle" color="black">
-                                    <Menu.Item> 
-                                        <Button icon size='large' >
-                                            <Icon name='lightbulb' />
-                                        </Button>
-                                    </Menu.Item>
-                                    <CirclePicker width={'100hw'} onChangeComplete={ this.handleSetDrawingColor }/>
+                                    <CirclePicker width={'100hw'} onChangeComplete={ this.handleChangeComplete }/>
                                 </Grid.Row>
                                 <Grid.Row style={{ height: '90%' }} centered verticalAlign="middle" horizontalAlign="middle" color="black">
                                     <Grid.Column width={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)}>
-                                            <Icon name='pencil' />
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="pencil" size="3x"  />
+                                        </Button>
+                                    </Grid.Column>
+                                    <Grid.Column width={1} >
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="paint-brush" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} id="FabricCanvas" aligned left verticalAlign="middle" >
-                                        <Button icon size='large' >
-                                            <Icon name='paint brush' />
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="spray-can" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} aligned middle>
-                                        <Button icon size='large' >
-                                            <Icon name='eraser' />
-                                        </Button>
-                                    </Grid.Column>
-                                    <Grid.Column width={1} aligned middle>
-                                        <Button icon size='large' >
-                                            <Icon name='trash alternate' />
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="circle" size="3x"  />
                                         </Button>
                                     </Grid.Column>                                    
                                     <Grid.Column width={1} aligned middle>
-                                        <Button icon size='large' >
-                                            <Icon name='save' />
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="square" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} aligned middle>
-                                        <Button icon size='large' >
-                                            <Icon name='theme' />
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="grip-lines" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} aligned middle>
-                                        <Button icon size='large'>
-                                            <Icon name='add circle' />
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="eraser" size="3x"  />
+                                        </Button>
+                                    </Grid.Column>
+                                    <Grid.Column width={1} aligned middle>
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="trash-alt" size="3x"  />
+                                        </Button>
+                                    </Grid.Column>
+                                    <Grid.Column width={1} aligned middle>
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="file-image" size="3x"  />
+                                        </Button>
+                                    </Grid.Column>
+                                    <Grid.Column width={1} aligned middle>
+                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <FontAwesomeIcon icon="file-download" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                 </Grid.Row>

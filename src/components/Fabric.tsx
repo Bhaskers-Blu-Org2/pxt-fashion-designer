@@ -42,14 +42,12 @@ export class Fabric extends React.Component<any, any> {
         this.element = el as HTMLCanvasElement;
         this.canvas = new fabric.Canvas(this.element,{
             backgroundColor: 'transparent',
-            freeDrawingCursor: 'none',
         });
 
         var width = Math.min(bbox.width, window.innerWidth || 0);
         var height = Math.max(bbox.height, window.innerHeight || 0);
         this.canvas.setWidth(width);
         this.canvas.setHeight(height);
-
     }
 
     setHeightWidth()

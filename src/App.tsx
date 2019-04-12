@@ -1,12 +1,8 @@
 // / <reference path="./localtypings/fabric.d.ts" />
 
 import * as React from 'react';
-import { Menu, Button } from 'semantic-ui-react'
 import { pxt, PXTClient } from '../lib/pxtextensions';
-import { Fabric } from './components/Fabric';
-import { SidebarExampleSidebar} from './components/Sketching';
 import { MainCanvas } from './components/MainCanvas'
-
 
 export interface AppProps {
     client: PXTClient;
