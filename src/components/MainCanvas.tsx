@@ -124,6 +124,26 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
         this.fabric.setSprayBrush();
     }
 
+    handleDownloadSketch()
+    {
+        let sketch_link = document.createElement("a");
+        var svgdata = this.fabric.canvas.toSVG()
+        var locfile = new Blob([svgdata], {type: "image/svg+xml;charset=utf-8"});
+        sketch_link.href = URL.createObjectURL(locfile);
+        sketch_link.download = "sketch.svg";
+        sketch_link.click();
+    }
+
+    handleImageAddToCanvas()
+    {
+        let url = "";
+        fabric.Image.fromURL(url,(img)=> {});
+
+        fabric.Image.fromURL(url, (oImg) => {
+            this.fabric.canvas.add(oImg);
+        });
+    }
+
     //#endregion
 
     handleChangeComplete = (data: any) => {
@@ -141,9 +161,8 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                 <Sidebar.Pushable as={Segment}>
                     <Sidebar
                         as={Segment}
-                        animation='overlay'
+                        animation='push'
                         direction='bottom'
-                        inverted
                         horizontal
                         visible={sketchingToolbarVisible}
                         onHide={this.handleSketchingToolBarHide}
@@ -200,12 +219,12 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} aligned middle>
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.handleImageAddToCanvas.bind(this)} color="black">
                                             <FontAwesomeIcon icon="file-image" size="3x"  />
                                         </Button>
                                     </Grid.Column>
                                     <Grid.Column width={1} aligned middle>
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.handleDownloadSketch.bind(this)} color="black">
                                             <FontAwesomeIcon icon="file-download" size="3x"  />
                                         </Button>
                                     </Grid.Column>
@@ -215,7 +234,7 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                     </Sidebar>
                     <Sidebar
                         as={Segment}
-                        animation='overlay'
+                        animation='push'
                         direction='right'
                         inverted
                         vertical
@@ -290,7 +309,7 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                     </Sidebar>
                     <Sidebar
                         as={Segment}
-                        animation='overlay'
+                        animation='push'
                         direction='top'
                         inverted
                         horizontal
