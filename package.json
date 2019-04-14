@@ -44,6 +44,7 @@
         "react": "^16.6.3",
         "react-color": "^2.17.0",
         "react-dom": "^16.6.3",
+        "react-file-drop": "^0.2.8",
         "semantic-ui-react": "0.83.0"
     }
 }

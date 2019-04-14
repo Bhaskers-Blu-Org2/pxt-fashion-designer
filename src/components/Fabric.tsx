@@ -38,6 +38,11 @@ export class Fabric extends React.Component<any, any> {
         this.canvas.setSprayBrush(this.canvas);
     }
 
+    clearCanvas()
+    {
+        this.canvas.clear().renderAll();
+    }
+
     zoomIn()
     {
         var zoom = this.canvas.getZoom();
@@ -65,7 +70,7 @@ export class Fabric extends React.Component<any, any> {
         this.canvas.setWidth(width);
         this.canvas.setHeight(height);
         //this.canvas.setBrushWidth(5);
-        this.canvas.setPencilBrush(this.canvas);
+        //this.canvas.setPencilBrush(this.canvas);
     }
 
     componentDidUpdate()

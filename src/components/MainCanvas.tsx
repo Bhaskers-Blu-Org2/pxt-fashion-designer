@@ -5,6 +5,8 @@ import { CirclePicker } from 'react-color';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPencil, faPaintBrush, faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload, faLightbulb,  faPalette, faTemperatureHot, faBrain, faArrows, faSignalAlt, faHandPaper, faTireRugged, faLightsHoliday, faVolume, faMousePointer} from '@fortawesome/pro-solid-svg-icons'
+import FileDrop from 'react-file-drop'
+
 
 library.add(faPencil,faPaintBrush,faSprayCan, faEraser, faCircle, faSquare, faGripLines, faFileImage, faTrashAlt, faFileDownload, faLightbulb, faPalette, faTemperatureHot, faBrain, faArrows, faSignalAlt, faHandPaper, faTireRugged, faLightsHoliday, faVolume, faMousePointer)
 
@@ -15,6 +17,8 @@ export interface MainCanvasState {
     beadsToolbarVisble: boolean;
     sketchingToolbarVisible: boolean;
     imageDragDropActive: boolean;
+    canvasImages: [];
+    inspirationImages: [];
 }
 
 export class MainCanvas extends React.Component<any,MainCanvasState>{
@@ -32,7 +36,9 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
             inspirationToolBarVisible: false,
             beadsToolbarVisble: false,
             sketchingToolbarVisible: false,
-            imageDragDropActive: false
+            imageDragDropActive: false,
+            canvasImages: [],
+            inspirationImages: []
         }
     
         this.handleSketchingToolBarClick = this.handleSketchingToolBarClick.bind(this);
@@ -128,12 +134,24 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
 
     handleDownloadSketch()
     {
+        // let sketch_link = document.createElement("a");
+        // var svgdata = this.fabric.canvas.toSVG()
+        // var locfile = new Blob([svgdata], {type: "image/svg+xml;charset=utf-8"});
+        // sketch_link.href = URL.createObjectURL(locfile);
+        // sketch_link.download = "sketch.svg";
+        // sketch_link.click();
+
         let sketch_link = document.createElement("a");
-        var svgdata = this.fabric.canvas.toSVG()
-        var locfile = new Blob([svgdata], {type: "image/svg+xml;charset=utf-8"});
-        sketch_link.href = URL.createObjectURL(locfile);
-        sketch_link.download = "sketch.svg";
+        var svgdata = this.fabric.canvas.toDataURL({format: 'png'});
+        sketch_link.href = svgdata;
+        sketch_link.download = "sketch.png";
         sketch_link.click();
+        
+    }
+
+    handleClearSketchCanvas()
+    {
+        this.fabric.clearCanvas();
     }
 
     handleImageAddToCanvas()
@@ -156,15 +174,32 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
 
     handleHide = () => this.setState({ imageDragDropActive: false })
 
+    handleDrop = (files:FileList, event:any) => {
+        var url = URL.createObjectURL(files[0]);
+
+        let canvas = this.fabric.canvas;
+        fabric.Image.fromURL(url, function(oImg) {
+            var l = Math.random() * (500 - 0) + 0;
+            var t = Math.random() * (500 - 0) + 0;                
+                oImg.scale(0.2);
+            oImg.set({'left':l});
+                      oImg.set({'top':t});
+                      canvas.add(oImg);
+            });
+    }
+
     render() {
         const {sketchingToolbarVisible} = this.state;
         const {beadsToolbarVisble} = this.state;
         const {inspirationToolBarVisible} = this.state;
         const {imageDragDropActive} = this.state
+        const styles = { border: '1px solid black', width: 600, color: 'black', padding: 20 };
 
         return (
             
             <div>
+
+                
                 <Dimmer.Dimmable as={Segment} dimmed={imageDragDropActive}>               
                     <Sidebar.Pushable as={Segment}>
                         <Sidebar
@@ -222,7 +257,7 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                                             </Button>
                                         </Grid.Column>
                                         <Grid.Column width={1} aligned middle>
-                                            <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                            <Button icon size='medium' onClick={this.handleClearSketchCanvas.bind(this)} color="black">
                                                 <FontAwesomeIcon icon="trash-alt" size="3x"  />
                                             </Button>
                                         </Grid.Column>
@@ -367,11 +402,10 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                     </Sidebar.Pusher>
                     </Sidebar.Pushable>
                     <Dimmer active={imageDragDropActive}  onClickOutside={this.handleHide}>
-                    <Header as='h2' icon inverted>
-                        <Icon name='image' />
-                            Drag your image or sketch here
-                    </Header>
-                </Dimmer>
+                        <FileDrop onDrop={this.handleDrop}>
+                            Drop your image or sketch here
+                        </FileDrop>
+                    </Dimmer>
                 </Dimmer.Dimmable> 
             </div>
 
