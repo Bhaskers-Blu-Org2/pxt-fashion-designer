@@ -13,9 +13,26 @@ export class Fabric extends React.Component<any, any> {
 
     }
 
+    deleteCurrentObject()
+    {
+        if (this.canvas.getActiveObjects() != null)
+        {
+            this.canvas.getActiveObjects().forEach(element => {
+                this.canvas.remove(element);
+            });
+        }
+    }
+    
     setDrawingMode()
     {
         this.canvas.isDrawingMode = true;
+        this.canvas.selection = false;
+    }
+
+    setSelectionMode()
+    {
+        this.canvas.isDrawingMode = false;
+        this.canvas.selection = true;
     }
 
     setDrawingColor(color: string)

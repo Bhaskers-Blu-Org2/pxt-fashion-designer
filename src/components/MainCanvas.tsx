@@ -48,7 +48,19 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
 
     //#region Default React Component methods
 
+    private handleDeleteKey = (e: KeyboardEvent) => {
+        if (e.keyCode == 8)
+        {
+            this.fabric.deleteCurrentObject();
+        }
+    }
+
     componentDidMount() {
+        document.addEventListener("keydown", this.handleDeleteKey);
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener("keydown",this.handleDeleteKey);
     }
 
     //#endregion
@@ -130,6 +142,7 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
     {
         this.fabric.setDrawingMode();
         this.fabric.setSprayBrush();
+
     }
 
     handleDownloadSketch()
@@ -165,7 +178,10 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
         this.setState({ imageDragDropActive: true });
     }
 
-    //#endregion
+    handleSetSelectionMode()
+    {
+        this.fabric.setSelectionMode();
+    }
 
     handleChangeComplete = (data: any) => {
         this.fabric.setDrawingColor(data.hex);
@@ -174,7 +190,9 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
 
     handleHide = () => this.setState({ imageDragDropActive: false })
 
+    //TODO: Handle multiple files?
     handleDrop = (files:FileList, event:any) => {
+
         var url = URL.createObjectURL(files[0]);
 
         let canvas = this.fabric.canvas;
@@ -188,18 +206,18 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
             });
     }
 
+    //#endregion
+
+
     render() {
         const {sketchingToolbarVisible} = this.state;
         const {beadsToolbarVisble} = this.state;
         const {inspirationToolBarVisible} = this.state;
-        const {imageDragDropActive} = this.state
-        const styles = { border: '1px solid black', width: 600, color: 'black', padding: 20 };
+        const {imageDragDropActive} = this.state;
 
         return (
             
-            <div>
-
-                
+            <div> 
                 <Dimmer.Dimmable as={Segment} dimmed={imageDragDropActive}>               
                     <Sidebar.Pushable as={Segment}>
                         <Sidebar
@@ -247,7 +265,7 @@ export class MainCanvas extends React.Component<any,MainCanvasState>{
                                             </Button>
                                         </Grid.Column>
                                         <Grid.Column width={1} >
-                                            <Button icon size='medium' onClick={this.handleSetPencilDrawingMode.bind(this)} color="black" className="cool">
+                                            <Button icon size='medium' onClick={this.handleSetSelectionMode.bind(this)} color="black" className="cool">
                                                 <FontAwesomeIcon icon="mouse-pointer" size="3x"  />
                                             </Button>
                                         </Grid.Column>
