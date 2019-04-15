@@ -22,7 +22,7 @@ export class Fabric extends React.Component<any, any> {
             });
         }
     }
-    
+
     setDrawingMode()
     {
         this.canvas.isDrawingMode = true;
