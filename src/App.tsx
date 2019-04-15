@@ -20,6 +20,20 @@ export class App extends React.Component<AppProps, AppState> {
 
         this.state = {
         }
+
+        this.handleReadResponse = this.handleReadResponse.bind(this);
+        this.handleHidden = this.handleHidden.bind(this);
+
+        props.client.on('read', this.handleReadResponse);
+        props.client.on('hidden', this.handleHidden);
+    }
+
+    handleReadResponse(resp: pxt.extensions.ReadResponse) {
+        this.deserialize(resp);
+    }
+
+    handleHidden() {
+        this.serialize();
     }
 
     private deserialize(resp: pxt.extensions.ReadResponse) {
@@ -34,14 +48,20 @@ export class App extends React.Component<AppProps, AppState> {
         // PXT allows us to write to files in the project [extension_name].ts and [extension_name].json
         console.log("write code and json");
 
-        const code = "// TODO";
-        const json = {};
-        pxt.extensions.write(code, JSON.stringify(json));
+        const code = `
+namespace fashion {
+    //% fixedInstance whenUsed block="left foot"
+    export const motion2 = new MotionBead("left foot");            
+}
+        `;
+        const json = {
+            test: "testing"
+        };
+        pxt.extensions.write(code, JSON.stringify(this.state));
     }
 
 
     render() {
-
         return (
             <div >
                 <MainCanvas ref={m => this._mainCanvas = m} />

@@ -19,5 +19,6 @@
         "label": "fashion",
         "localUrl": "http://127.0.0.1:3000/index.html"
     },
-    "installedVersion": "workspace:6922374e-7540-4504-875a-50bddfe0afab"
+    "installedVersion": "workspace:6922374e-7540-4504-875a-50bddfe0afab",
+    "preferredEditor": "tsprj"
 }
