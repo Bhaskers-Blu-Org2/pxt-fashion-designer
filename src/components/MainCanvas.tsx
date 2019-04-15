@@ -26,13 +26,13 @@ export interface MainCanvasState {
     canvasImages: [];
     inspirationImages: [];
     drawingMode: DrawingMode;
+    sensors: fabric.Circle[];
 }
 
 export class MainCanvas extends React.Component<any, MainCanvasState>{
 
 
     fabric: Fabric;
-
 
     constructor(props: {}) {
 
@@ -46,7 +46,8 @@ export class MainCanvas extends React.Component<any, MainCanvasState>{
             imageDragDropActive: false,
             canvasImages: [],
             inspirationImages: [],
-            drawingMode: DrawingMode.regular
+            drawingMode: DrawingMode.regular,
+            sensors: [] 
         }
 
         this.handleSketchingToolBarClick = this.handleSketchingToolBarClick.bind(this);
@@ -362,6 +363,81 @@ export class MainCanvas extends React.Component<any, MainCanvasState>{
 
     //#endregion
 
+    //#region Adding Sensors
+
+    addSensorCircle(name: string, color: string)
+    {
+        var sensorCircle = new fabric.Circle({
+            left: 50,
+            top: 50,
+            radius: 20,
+            strokeWidth: 2,
+            stroke: 'black',
+            fill: color,
+            name: name,
+            selectable: true,
+            originX: 'center', originY: 'center'
+        });
+        this.fabric.canvas.add(sensorCircle);
+        this.fabric.canvas.bringToFront(sensorCircle);
+    
+        var newStateArray = this.state.sensors.slice();
+        newStateArray.push(sensorCircle);
+        this.setState({sensors: newStateArray});
+    }
+
+
+    addTattoo()
+    {
+        this.addSensorCircle('TATTOO','#9b59b6')
+    }
+
+    addAccelerometer()
+    {
+        this.addSensorCircle('ACCEL','#2ecc71')
+    }
+
+    addProximitySensor()
+    {
+        this.addSensorCircle('PROX','#3498db')
+    }
+
+    addEnvironmentSensor()
+    {
+        this.addSensorCircle('ENVIRO','#f1c40f')
+    }
+
+    addLightSensor()
+    {
+        this.addSensorCircle('LIGHT','#e74c3c')
+    }
+
+    addColorSensor()
+    {
+        this.addSensorCircle('COLOR','#ffffff')        
+    }
+
+    addLightOutput()
+    {
+        this.addSensorCircle('LIGHTOUT','#ecf0f1')        
+    }
+
+    addTattooOutput()
+    {
+        this.addSensorCircle('TATTOOOUT','#9b59b6')        
+    }
+
+    addMotorOutPut()
+    {
+        this.addSensorCircle('MOTOROUT','#2c3e50')        
+    }
+
+    addSoundOutput()
+    {
+        this.addSensorCircle('SOUNDOUT','#e84393')        
+    }
+
+    //#endregion
 
     render() {
         const { sketchingToolbarVisible } = this.state;
@@ -465,32 +541,32 @@ export class MainCanvas extends React.Component<any, MainCanvasState>{
                                         <Divider />
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addEnvironmentSensor.bind(this)} color="black">
                                             <FontAwesomeIcon icon="temperature-hot" size="3x" color="#f1c40f" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addProximitySensor.bind(this)} color="black">
                                             <FontAwesomeIcon icon="signal-alt" size="3x" color="#3498db" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addLightSensor.bind(this)} color="black">
                                             <FontAwesomeIcon icon="lightbulb" size="3x" color="#e74c3c" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addAccelerometer.bind(this)} color="black">
                                             <FontAwesomeIcon icon="arrows" size="3x" color="#2ecc71" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addTattoo.bind(this)} color="black">
                                             <FontAwesomeIcon icon="hand-paper" size="3x" color="#9b59b6" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addColorSensor.bind(this)} color="black">
                                             <FontAwesomeIcon icon="palette" size="3x" color="#ffffff" />
                                         </Button>
                                     </Grid.Row>
@@ -500,22 +576,22 @@ export class MainCanvas extends React.Component<any, MainCanvasState>{
                                         <Divider />
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addMotorOutPut.bind(this)} color="black">
                                             <FontAwesomeIcon icon="tire-rugged" size="3x" color="#2c3e50" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addLightOutput.bind(this)} color="black">
                                             <FontAwesomeIcon icon="lights-holiday" size="3x" color="#ecf0f1" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addSoundOutput.bind(this)} color="black">
                                             <FontAwesomeIcon icon="volume" size="3x" color="#e84393" />
                                         </Button>
                                     </Grid.Row>
                                     <Grid.Row height={1} >
-                                        <Button icon size='medium' onClick={this.handleSetDrawingMode.bind(this)} color="black">
+                                        <Button icon size='medium' onClick={this.addTattooOutput.bind(this)} color="black">
                                             <FontAwesomeIcon icon="hand-paper" size="3x" color="#9b59b6" />
                                         </Button>
                                     </Grid.Row>
