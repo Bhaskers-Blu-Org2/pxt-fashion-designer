@@ -4,7 +4,8 @@
     "description": "A Fashion designer for makecode",
     "license": "MIT",
     "dependencies": {
-        "core": "*"
+        "core": "*",
+        "jacdac-drivers": "*"
     },
     "files": [
         "README.md",

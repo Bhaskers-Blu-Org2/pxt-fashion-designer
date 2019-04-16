@@ -1,6 +1,6 @@
 enum BeadGesture {
     //% block="shake"
-    Shake
+    Shake = JDGesture.Shake
 }
 
 /**
@@ -10,21 +10,30 @@ enum BeadGesture {
 namespace fashion {
     //% fixedInstances
     export class Bead {
-        _name: string;
-        constructor(name: string) {
-            // tell jacdac about the name
-            this._name = name;
+        private _client: jacdac.Client;
+
+        constructor(client: jacdac.Client) {
+            this._client = client;
         }
 
+        /**
+         * Gets the name of the bead on the JACDAC network
+         */
+        //% group="Properties"
+        //% blockId=beadname block="%bead name"
         get name() {
-            return this._name;
+            return this._client.name;
+        }
+
+        get client() {
+            return this._client;
         }
     }
 
     //% fixedInstances
     export class MotionBead extends Bead {
         constructor(name: string) {
-            super(name);
+            super(new jacdac.AccelerometerClient(name));
         }
 
         /**
@@ -35,6 +44,8 @@ namespace fashion {
         //% blockId=motionbeadongesture block="on motion %bead %gesture"
         //% group="Motion"
         onGesture(gesture: BeadGesture, handler: () => void) {
+            const c = this.client as jacdac.AccelerometerClient;
+            c.onEvent(<JDGesture><number>gesture, handler);
         }
     }
 
